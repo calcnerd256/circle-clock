@@ -1,0 +1,70 @@
+<HTML>
+ <HEAD>
+  <SCRIPT>
+ function circle(ctx, x, y, r)
+ {
+  if(r < 0) r = -r;
+  ctx.arc(x,y,r, 0, Math.PI * 2, true);
+ }
+
+ function drawPseudoKissingCirclesWithBadInterface(ctx, num, inner, size)
+ {
+  //come back and refactor to use scaling, translation, and rotation transforms
+  ctx.beginPath();
+  circle(ctx, size, size, size);
+  ctx.stroke();
+  ctx.beginPath();
+  circle(ctx, size, size, size * inner);
+  ctx.stroke();
+  var outer = (1 - inner) / 2
+  for(var i = 0; i < num; i++) //here's where readability can win from elegant simplicity of transforms
+  {
+   ctx.beginPath()
+   circle
+   (
+    ctx,
+    size * (1 + Math.cos(Math.PI * 2 / num * i) * (inner + outer)),
+    size * (1 - Math.sin(Math.PI * 2 / num * i) * (inner + outer)),
+    size * outer
+   );
+   ctx.stroke()
+  }
+ }
+
+ function kissingRatio(exteriorCardinality) // ratio of radii of inner circle to each of n outer circles
+ {
+  var theta = Math.PI / exteriorCardinality; // half the angle, in radians, of the arc each outer circle represents
+  var inner = 1 / Math.sin(theta) - 1; // cosecant * 1 + inner = 1 when outer is assumed to be one
+  return inner / (inner + 2); // inner + 2 * outer = 1, our desired outcome from figure 1 (forthcoming)
+ }
+
+ var size = 256;
+
+ function draw()
+ {
+  var canvas = document.getElementsByTagName("canvas").item(0);
+  var ctx = canvas.getContext("2d");
+  ctx.clearRect(0,0,size,size);
+  var time = new Date();
+  var ms = (time.getSeconds() * 1000 + time.getMilliseconds());
+  drawPseudoKissingCirclesWithBadInterface(ctx, ms / 1000, kissingRatio(ms / 1000), size / 2);
+ }
+
+function init(){
+ var canv = document.createElement("canvas");
+ canv.width = size;
+ canv.height = size;
+ document.getElementsByTagName("body").item(0).appendChild(canv);
+
+ setInterval(draw, 50)
+ return true;
+}
+
+var started = false;
+document.onreadystatechange = function(){if(!started) started = init();}
+
+  </SCRIPT>
+ </HEAD>
+ <BODY>
+ </BODY>
+</HTML>
