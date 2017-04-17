@@ -53,27 +53,24 @@
   var k = kissingRatio(s);
   drawPseudoKissingCirclesWithBadInterface(ctx, s, k, r, size / 2);
   r *= k;
-  s = 60 - s;
-  k = kissingRatio(s);
-  drawPseudoKissingCirclesWithBadInterface(ctx, s, k, r, size / 2);
+  k = kissingRatio(60 - s);
+  drawPseudoKissingCirclesWithBadInterface(ctx, 60 - s, k, r, size / 2);
   r *= k;
 
   var m = time.getMinutes() + s / 60;
   k = kissingRatio(m);
   drawPseudoKissingCirclesWithBadInterface(ctx, m, k, r, size / 2);
   r *= k;
-  m = 60 - m;
-  k = kissingRatio(m);
-  drawPseudoKissingCirclesWithBadInterface(ctx, m, k, r, size / 2);
+  k = kissingRatio(60 - m);
+  drawPseudoKissingCirclesWithBadInterface(ctx, 60 - m, k, r, size / 2);
   r *= k;
 
   var h = time.getHours() + m / 60;
   k = kissingRatio(h);
   drawPseudoKissingCirclesWithBadInterface(ctx, h, k, r, size / 2);
   r *= k;
-  h = 24 - h;
-  k = kissingRatio(h);
-  drawPseudoKissingCirclesWithBadInterface(ctx, h, k, r, size / 2);
+  k = kissingRatio(24 - h);
+  drawPseudoKissingCirclesWithBadInterface(ctx, 24 - h, k, r, size / 2);
   r *= k;
  }
 
